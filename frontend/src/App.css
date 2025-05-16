@@ -1,0 +1,27 @@
+body {
+  font-family: Arial;
+  background: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #ccc;
+}
+
+input, button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+}
