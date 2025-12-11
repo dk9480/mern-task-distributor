@@ -122,34 +122,40 @@ Title,Description,Priority,DueDate
 ## 📊 API Endpoints
 
 ### 🔐 Authentication
-POST /api/auth/login # Admin login
-POST /api/agent-auth/login # Agent/Sub-agent login
-
-
-### 👥 User Management
-POST /api/agents # Create agent (Admin)
-GET /api/agents # Get all agents (Admin)
-
-POST /api/sub-agents # Create sub-agent (Agent)
-GET /api/sub-agents # Get all sub-agents (Agent)
-
-
-### 📝 Task Management
-POST /api/tasks # Create single task
-POST /api/tasks/upload # Upload CSV tasks
-GET /api/tasks # Get tasks (role-based)
-PUT /api/tasks/:id/status # Update task status
-
-
-
-### 🛠️ Admin Tools
-GET /api/admin/tasks # Get all tasks
-POST /api/admin/duplicates/detect # Detect duplicate tasks
-POST /api/admin/duplicates/remove # Remove duplicates
-
-
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| **POST** | `/api/auth/login` | Admin login |
+| **POST** | `/api/agent-auth/login` | Agent/Sub-agent login |
 
 ---
+
+### 👥 User Management
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| **POST** | `/api/agents` | Create agent (Admin only) |
+| **GET** | `/api/agents` | Get all agents (Admin only) |
+| **POST** | `/api/sub-agents` | Create sub-agent (Agent only) |
+| **GET** | `/api/sub-agents` | Get sub-agents (Agent only) |
+
+---
+
+### 📝 Task Management
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| **POST** | `/api/tasks` | Create a single task |
+| **POST** | `/api/tasks/upload` | Upload CSV tasks |
+| **GET** | `/api/tasks` | Get tasks (role-based) |
+| **PUT** | `/api/tasks/:id/status` | Update task status |
+
+---
+
+### 🛠️ Admin Features
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| **GET** | `/api/admin/tasks` | Get all system tasks |
+| **POST** | `/api/admin/duplicates/detect` | Detect duplicate tasks |
+| **POST** | `/api/admin/duplicates/remove` | Remove duplicate tasks |
+
 
 ## 🧪 Testing the Application
 
