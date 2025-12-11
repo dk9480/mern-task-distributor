@@ -16,7 +16,11 @@ A full-stack task management system with hierarchical user roles and automated t
 ---
 
 ## 🏗️ Architecture
-
+Frontend (React) → Backend (Node.js/Express) → Database (MongoDB)
+       ↓                     ↓                       ↓
+  Dashboard UI           RESTful APIs          Data Persistence
+  Role-based UI          Authentication        Task Distribution
+  File Upload            Authorization         User Management
 
 
 
