@@ -1,41 +1,89 @@
-.section {
+ .section {
   padding: 20px;
-  max-width: 900px;
-  margin: auto;
+  max-width: 1200px;
+  margin: 0 auto;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  color: #333;
 }
 
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 15px;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  align-items: center;
 }
 
-.filters select,
-.filters input {
-  padding: 10px;
+.filter-select, .search-input {
+  padding: 10px 15px;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 6px;
   min-width: 200px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.search-input {
+  flex: 1;
+  max-width: 400px;
 }
 
 .task-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.task-list li {
-  background: #f7f7f7;
-  border: 1px solid #ddd;
-  margin-bottom: 10px;
-  padding: 12px;
-  border-radius: 6px;
+.task-item {
+  background: #fff;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.task-item p {
+  margin: 8px 0;
+  color: #555;
+}
+
+.task-item strong {
+  color: #333;
+  min-width: 80px;
+  display: inline-block;
+}
+
+.no-results, .no-agent-selected, .initial-message {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filter-select, .search-input {
+    width: 100%;
+    max-width: 100%;
+  }
 }
