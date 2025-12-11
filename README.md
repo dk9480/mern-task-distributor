@@ -156,6 +156,7 @@ Title,Description,Priority,DueDate
 | **POST** | `/api/admin/duplicates/detect` | Detect duplicate tasks |
 | **POST** | `/api/admin/duplicates/remove` | Remove duplicate tasks |
 
+---
 
 ## 🧪 Testing the Application
 
