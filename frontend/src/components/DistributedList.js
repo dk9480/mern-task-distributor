@@ -1,93 +1,127 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import API from '../api';
 import './DistributedList.css';
 
-const DistributedList = () => {
-  const [agents, setAgents] = useState([]);
-  const [selectedAgent, setSelectedAgent] = useState('');
-  const [tasks, setTasks] = useState([]);
+function DistributedList({ agents = [] }) {  // Default to empty array
+  const [lists, setLists] = useState([]);
+  const [filteredLists, setFilteredLists] = useState([]);
+  const [agentId, setAgentId] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-
-  const token = localStorage.getItem('token');
+  const [loading, setLoading] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
-    const fetchAgents = async () => {
-      try {
-        const res = await axios.get('http://localhost:5000/api/agents', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setAgents(res.data);
-      } catch (error) {
-        console.error('Error fetching agents:', error);
-      }
-    };
+    if (agentId) {
+      fetchLists();
+    } else {
+      setLists([]);
+      setFilteredLists([]);
+    }
+  }, [agentId]);
 
-    fetchAgents();
-  }, []);
+  useEffect(() => {
+    const results = lists.filter(item => {
+      const matchesSearch = searchTerm 
+        ? (item.firstName && item.firstName.toLowerCase().includes(searchTerm.toLowerCase())) || 
+          (item.phone && item.phone.toString().includes(searchTerm)) ||
+          (item.notes && item.notes.toLowerCase().includes(searchTerm.toLowerCase()))
+        : true;
+      return matchesSearch;
+    });
+    setFilteredLists(results);
+  }, [searchTerm, lists]);
 
-  const handleAgentChange = async (e) => {
-    const agentId = e.target.value;
-    setSelectedAgent(agentId);
-
+  const fetchLists = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/upload/lists?agentId=${agentId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setTasks(res.data);
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
+      setLoading(true);
+      const res = await API.get('/upload/lists', { params: { agentId } });
+      setLists(Array.isArray(res.data) ? res.data : []);
+      setInitialLoad(false);
+    } catch (err) {
+      alert(err.response?.data?.msg || 'Error fetching tasks');
+    } finally {
+      setLoading(false);
     }
   };
 
-//   const filteredTasks = tasks.filter(task =>
-//     (task.firstName && task.firstName.toLowerCase().includes(searchTerm.toLowerCase())) ||
-//     (task.phone && task.phone.includes(searchTerm))
-//   );
-const filteredTasks = tasks.filter(task =>
-  (task.firstName && task.firstName.toLowerCase().includes(searchTerm.toLowerCase())) ||
-  (task.phone && task.phone.toString().includes(searchTerm))
-);
+  if (initialLoad) {
+    return (
+      <div className="section">
+        <h2>Distributed Tasks</h2>
+        <div className="filters">
+          <select 
+            value={agentId} 
+            onChange={(e) => setAgentId(e.target.value)}
+            className="filter-select"
+          >
+            <option value="">Select an agent to view tasks</option>
+            {Array.isArray(agents) && agents.map(agent => (
+              <option key={agent._id} value={agent._id}>
+                {agent.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="initial-message">
+          <p>Please select an agent to view their assigned tasks</p>
+        </div>
+      </div>
+    );
+  }
 
+  if (loading) return <div className="loading">Loading tasks...</div>;
 
   return (
     <div className="section">
       <h2>Distributed Tasks</h2>
-
       <div className="filters">
-        <select value={selectedAgent} onChange={handleAgentChange}>
-          <option value="">Select Agent</option>
-          {agents.map(agent => (
+        <select 
+          value={agentId} 
+          onChange={(e) => setAgentId(e.target.value)}
+          className="filter-select"
+        >
+          <option value="">Select an agent</option>
+          {Array.isArray(agents) && agents.map(agent => (
             <option key={agent._id} value={agent._id}>
               {agent.name}
             </option>
           ))}
         </select>
-
-        {selectedAgent && (
+        
+        {agentId && (
           <input
             type="text"
-            placeholder="Search by name or phone"
+            placeholder="Search tasks..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
           />
         )}
       </div>
-
-      {filteredTasks.length > 0 ? (
+      
+      {agentId ? (
         <ul className="task-list">
-          {filteredTasks.map((task, idx) => (
-            <li key={idx}>
-              <strong>Name:</strong> {task.firstName || 'N/A'} |{' '}
-              <strong>Phone:</strong> {task.phone || 'N/A'} |{' '}
-              <strong>Notes:</strong> {task.notes || 'N/A'}
-            </li>
-          ))}
+          {filteredLists.length > 0 ? (
+            filteredLists.map((item) => (
+              <li key={item._id} className="task-item">
+                <p><strong>Name:</strong> {item.firstName}</p>
+                <p><strong>Phone:</strong> {item.phone}</p>
+                <p><strong>Notes:</strong> {item.notes || 'N/A'}</p>
+              </li>
+            ))
+          ) : (
+            <li className="no-results">No tasks found for this agent</li>
+          )}
         </ul>
-      ) : selectedAgent ? (
-        <p>No tasks found for this agent or matching search term.</p>
-      ) : null}
+      ) : (
+        <div className="no-agent-selected">
+          <p>No agent selected. Please choose an agent to view tasks.</p>
+        </div>
+      )}
     </div>
   );
-};
+}
 
 export default DistributedList;
+
+
