@@ -16,11 +16,8 @@ A full-stack task management system with hierarchical user roles and automated t
 ---
 
 ## 🏗️ Architecture
-Frontend (React) → Backend (Node.js/Express) → Database (MongoDB)
-       ↓                     ↓                       ↓
-  Dashboard UI           RESTful APIs          Data Persistence
-  Role-based UI          Authentication        Task Distribution
-  File Upload            Authorization         User Management
+<img width="625" height="164" alt="image" src="https://github.com/user-attachments/assets/523b8ee6-99ec-4832-bd72-4a0cd0b84ab7" />
+
 
 
 
@@ -29,16 +26,17 @@ Frontend (React) → Backend (Node.js/Express) → Database (MongoDB)
 ## 📁 Project Structure
 
 backend/
-├── controllers/ # Business logic
-├── models/ # Database schemas
-├── routes/ # API endpoints
-├── middleware/ # Authentication & authorization
-└── server.js # Entry point
+├── controllers/      # Business logic
+├── models/           # Database schemas
+├── routes/           # API endpoints
+├── middleware/       # Authentication & authorization
+└── server.js         # Entry point
 
 frontend/src/
-├── components/ # React components
-├── api.js # API configuration
-└── App.js # Main application
+├── components/       # React components
+├── api.js            # API configuration
+└── App.js            # Main application
+
 
 
 
