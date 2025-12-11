@@ -26,17 +26,7 @@ A full-stack task management system with hierarchical user roles and automated t
 ## 📁 Project Structure
 
 
-backend/
-├── controllers/ # Business logic
-├── models/ # Database schemas
-├── routes/ # API endpoints
-├── middleware/ # Authentication & authorization
-└── server.js # Entry point
-
-frontend/src/
-├── components/ # React components
-├── api.js # API configuration
-└── App.js # Main application
+<img width="748" height="310" alt="image" src="https://github.com/user-attachments/assets/9e459026-e241-4f74-9e5c-7951d858b365" />
 
 
 
